@@ -1,0 +1,16 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "dockerfile",
+    "dockerfile": "Dockerfile"
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "healthchecks": {
+      "readiness": {
+        "initialDelaySeconds": 5,
+        "periodSeconds": 10
+      }
+    }
+  }
+}
