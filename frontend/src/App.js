@@ -3,7 +3,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useAuthStore } from './context/authStore';
 import { useCartStore } from './context/cartStore';
 import Header from './components/Header';
@@ -13,16 +13,13 @@ import Checkout from './pages/Checkout';
 import './styles/globals.css';
 
 function App() {
-  const { user } = useAuthStore();
   const { fetchCart } = useCartStore();
   const [chatbotOpen, setChatbotOpen] = useState(false);
 
   useEffect(() => {
-    // Load user's cart when logged in
-    if (user) {
-      fetchCart();
-    }
-  }, [user, fetchCart]);
+    // Initialize cart on mount
+    fetchCart();
+  }, [fetchCart]);
 
   return (
     <Router>
@@ -32,10 +29,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route 
-              path="/checkout" 
-              element={user ? <Checkout /> : <Navigate to="/login" />} 
-            />
+            <Route path="/checkout" element={<Checkout />} />
             {/* Add more routes here */}
           </Routes>
         </main>
